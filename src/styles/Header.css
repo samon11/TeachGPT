@@ -1,0 +1,15 @@
+.header-container {
+  background-color: #0366d6; /* Adjust this color to match your brand */
+  color: #ffffff;
+  padding: 0px 20px;
+  text-align: left; /* Left-align the text */
+  font-size: 8px;
+  font-weight: bold;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensure the header is above other elements */
+  border-radius: 0 0 8px 8px; /* Rounded corners at the bottom */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Drop shadow */
+}

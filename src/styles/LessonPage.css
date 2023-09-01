@@ -1,0 +1,65 @@
+.editor-container {
+  display: flex;
+  background-color: #f6f8fa;
+  padding-top: 10px;
+}
+
+.chat-pane, .code-pane {
+  flex: 1;
+  padding: 20px;
+  overflow-block: clip;
+}
+
+.code-pane {
+  height: 70vh;
+}
+
+.chat-pane {
+  display: flex;
+  background-color: #f6f8fa;
+  flex-direction: column; /* Stack children vertically */
+  height: 80vh; /* Occupy full height of the parent container */
+}
+
+.chat-messages-container {
+  overflow-y: auto;
+  flex-grow: 1; /* Allow the container to grow and occupy available space */
+}
+
+.chat-input-container {
+  flex-shrink: 0; /* Prevent the input container from shrinking */
+  padding: 10px;
+  border-top: 1px solid #e1e4e8;
+  background-color: #f6f8fa;
+}
+
+.chat-message {
+  background-color: #ffffff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Drop shadow */
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+code, pre {
+  user-select: none;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* IE/Edge */
+}
+
+.chat-messages-container {
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: calc(100% - 50px); /* Adjust this value based on the height of the ChatUserInput component */
+  flex-grow: 1; /* Allow the container to grow and occupy available space */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
