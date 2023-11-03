@@ -17,7 +17,9 @@ import Spinner from '../components/Spinner';
 import LessonTopicInput from '../components/LessonTopicInput';
 import LanguageSelector from '../components/LanguageSelector';
 
+// add a mui side nav bar that is collapsible
 const LessonPage = () => {
+  const [open, setOpen] = useState(false);
   const [code, setCode] = useState('');
   const [lesson, setLesson] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
@@ -87,50 +89,51 @@ const LessonPage = () => {
   }
 
   return (
-    <div className="editor-container">
-      <Header />
-      <div className="chat-pane">
-        <h2>Lesson</h2>
-        <LanguageSelector languageMode={languageMode} setLanguageMode={setLanguageMode} />
-        <LessonTopicInput onSend={handleTopicSubmit} />
-        <div className="chat-messages-container">
-          {lesson &&
-            <div key={-1} className="chat-message">
-              <ReactMarkdown children={lesson} />
-            </div>
-          }
-          {chatHistory.map((chat, i) => (
-            <div key={i} className="chat-message" style={{ backgroundColor: chat.role === 'user' ? "#f5f5f5" : "#ffffff" }}>
-              <p><strong>{chat.role.toUpperCase()}:</strong></p> <ReactMarkdown className='no-select' children={chat.content} />
-            </div>
-          ))}
-          <div ref={messagesEndRef} />
+    <>
+      <div className="editor-container">
+        <div className="chat-pane">
+          <h2>Lesson</h2>
+          <LanguageSelector languageMode={languageMode} setLanguageMode={setLanguageMode} />
+          <LessonTopicInput onSend={handleTopicSubmit} />
+          <div className="chat-messages-container">
+            {lesson &&
+              <div key={-1} className="chat-message">
+                <ReactMarkdown children={lesson} />
+              </div>
+            }
+            {chatHistory.map((chat, i) => (
+              <div key={i} className="chat-message" style={{ backgroundColor: chat.role === 'user' ? "#f5f5f5" : "#ffffff" }}>
+                <p><strong>{chat.role.toUpperCase()}:</strong></p> <ReactMarkdown className='no-select' children={chat.content} />
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
+          {thinking ? <Spinner size={40} /> : <ChatUserInput onSendMessage={handleSendMessage} />}
         </div>
-        {thinking ? <Spinner size={40} /> : <ChatUserInput onSendMessage={handleSendMessage} />}
+        <div className="code-pane" style={{ overflow: 'hidden' }}>
+          <h2>Exercise</h2>
+          <AceEditor
+            setOptions={{
+              useWorker: false
+            }}
+            mode={languageMode}
+            theme="monokai"
+            value={code}
+            onChange={setCode}
+            name="code-editor"
+            editorProps={{ $blockScrolling: true }}
+            fontSize={14}
+            showPrintMargin={true}
+            showGutter={true}
+            highlightActiveLine={true}
+            width='100%'
+            height="calc(100vh - 40px)"
+            enableLiveAutocompletion
+            enableBasicAutocompletion
+          />
+        </div>
       </div>
-      <div className="code-pane" style={{ overflow: 'hidden' }}>
-        <h2>Exercise</h2>
-        <AceEditor
-          setOptions={{
-            useWorker: false
-          }}
-          mode={languageMode}
-          theme="monokai"
-          value={code}
-          onChange={setCode}
-          name="code-editor"
-          editorProps={{ $blockScrolling: true }}
-          fontSize={14}
-          showPrintMargin={true}
-          showGutter={true}
-          highlightActiveLine={true}
-          width='100%'
-          height="calc(100vh - 40px)"
-          enableLiveAutocompletion
-          enableBasicAutocompletion
-        />
-      </div>
-    </div>
+    </>
   );
 }
 
